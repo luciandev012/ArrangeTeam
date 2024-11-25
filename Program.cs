@@ -2,6 +2,8 @@
 
 using ArrangeTeam;
 
+const int ODD = 100;
+
 List<Player> upperGuide = new List<Player>();
 List<Player> lowerGuide = new List<Player>();
 
@@ -59,7 +61,7 @@ void Arrange(List<Player> players, int numOfGuide)
 
     // Start the backtracking process
     int[] groupSums = new int[numOfGuide]; // Track group totals
-    BackTracking(players, groups, groupSums, ref bestDifference, ref bestGroups, avg);
+    BackTracking(players, groups, groupSums, ref bestDifference, ref bestGroups, avg, 0);
     if(bestGroups == null)
     {
         Console.WriteLine("Cannot arrange");
@@ -80,7 +82,7 @@ void Arrange(List<Player> players, int numOfGuide)
 }
 
 
-void BackTracking(List<Player> players, List<List<Player>> groups, int[] groupSums, ref int bestDifference, ref List<List<Player>> bestGroups, int avg, int index = 0, int odd = 100)
+void BackTracking(List<Player> players, List<List<Player>> groups, int[] groupSums, ref int bestDifference, ref List<List<Player>> bestGroups, int avg, int index)
 {
     if (index == players.Count)
     {
@@ -101,14 +103,14 @@ void BackTracking(List<Player> players, List<List<Player>> groups, int[] groupSu
     // Try adding the current object to each group
     for (int i = 0; i < groups.Count; i++)
     {
-        if (groupSums[i] + players[index].Power > avg + odd)
+        if (groupSums[i] + players[index].Power > avg + ODD)
             continue;
         groups[i].Add(players[index]);
         groupSums[i] += players[index].Power;
         
 
         // Backtracking: Go to the next object
-        BackTracking(players, groups, groupSums, ref bestDifference, ref bestGroups, index + 1);
+        BackTracking(players, groups, groupSums, ref bestDifference, ref bestGroups, avg, index + 1);
 
         // Undo the addition (backtrack)
         groups[i].RemoveAt(groups[i].Count - 1);
