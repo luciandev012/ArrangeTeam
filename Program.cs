@@ -2,7 +2,7 @@
 
 using ArrangeTeam;
 
-const int ODD = 100;
+const int ODD = 200;
 
 List<Player> upperGuide = new List<Player>();
 List<Player> lowerGuide = new List<Player>();
